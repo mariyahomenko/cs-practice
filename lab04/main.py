@@ -4,8 +4,9 @@ from stats import average_by_city, read_valid, warmest_city
 
 def main():
     lines = sys.stdin.read().splitlines()
+    non_empty = [line for line in lines if line.strip() != ""]
     records = read_valid(lines)
-    skipped = len(lines) - len(records)
+    skipped = len(non_empty) - len(records)
     print(len(records))
     print(skipped)
     if records:

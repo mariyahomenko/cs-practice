@@ -3,8 +3,12 @@ def parse_record(line: str) -> dict:
     if len(parts) != 3:
         raise ValueError(f"Ожидалось 3 поля, получено {len(parts)}: {line!r}")
     city, temp, date = parts
+    city = city.strip()
+    temp = temp.strip()
+    date = date.strip()
     if city == "" or date == "":
         raise ValueError(f"Пустое поле города или даты: {line!r}")
+    temp = temp.replace(",", ".")
     try:
         temperature = float(temp)
     except ValueError:
@@ -35,8 +39,10 @@ def average_by_city(records: list[dict]) -> dict:
 
 def warmest_city(records: list[dict]) -> str:
     averages = average_by_city(records)
-    best = ""
-    for city in averages:
-        if best == "" or averages[city] > averages[best]:
+    if not averages:
+        return ""
+    best = None
+    for city in sorted(averages):
+        if best is None or averages[city] > averages[best]:
             best = city
     return best
