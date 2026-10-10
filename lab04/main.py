@@ -8,7 +8,11 @@ def main():
     skipped = len(lines) - len(records)
     print(len(records))
     print(skipped)
-    print(f"{average_by_city(records)[warmest_city(records)]:.1f}")
+    if records:
+        averages = average_by_city(records)
+        print(f"{averages[warmest_city(records)]:.1f}")
+    else:
+        print("0.0")
 
 
 if __name__ == "__main__":
