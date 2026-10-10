@@ -15,9 +15,12 @@ def parse_record(line: str) -> dict:
 def read_valid(lines: list[str]) -> list[dict]:
     records = []
     for line in lines:
-        if line == "":
+        if line.strip() == "":
             continue
-        records.append(parse_record(line))
+        try:
+            records.append(parse_record(line))
+        except ValueError:
+            continue
     return records
 
 
