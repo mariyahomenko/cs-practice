@@ -24,3 +24,21 @@ def count_levels(lines) -> dict:
         level = event["level"]
         counts[level] = counts.get(level, 0) + 1
     return counts
+
+
+def top_errors(lines, n: int) -> list[list]:
+    messages = {}
+    for line in lines:
+        if line.strip() == "":
+            continue
+        try:
+            event = parse_event(line)
+        except ValueError:
+            continue
+        if event["level"] != "ERROR":
+            continue
+        msg = event["message"]
+        messages[msg] = messages.get(msg, 0) + 1
+    pairs = [[msg, cnt] for msg, cnt in messages.items()]
+    pairs.sort(key=lambda p: (-p[1], p[0]))
+    return pairs[:n]
