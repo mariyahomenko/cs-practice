@@ -2,13 +2,14 @@ LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR"}
 
 
 def parse_event(line: str) -> dict:
-    line = line.rstrip("\n")
-    if line != line.strip():
-        raise ValueError(f"Лишние пробелы по краям: {line!r}")
     parts = line.split(maxsplit=2)
-    if len(parts) < 3:
+    if len(parts) < 2:
         raise ValueError(f"Недостаточно полей: {line!r}")
-    time, level, message = parts
+    if len(parts) == 2:
+        time, level = parts
+        message = ""
+    else:
+        time, level, message = parts
     if level not in LEVELS:
         raise ValueError(f"Незнакомый уровень: {level!r}")
     return {"time": time, "level": level, "message": message}
