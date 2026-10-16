@@ -2,6 +2,9 @@ LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR"}
 
 
 def parse_event(line: str) -> dict:
+    line = line.rstrip("\n")
+    if line != line.strip():
+        raise ValueError(f"Лишние пробелы по краям: {line!r}")
     parts = line.split(maxsplit=2)
     if len(parts) < 3:
         raise ValueError(f"Недостаточно полей: {line!r}")
