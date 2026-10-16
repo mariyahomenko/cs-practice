@@ -11,7 +11,7 @@ def main():
     with open(path, encoding="utf-8") as log:
         errors = top_errors(log, 3)
 
-    total = sum(v for k, v in counts.items() if k != "BROKEN")
+    total = sum(counts.values())
     errors_count = counts.get("ERROR", 0)
     broken = counts.get("BROKEN", 0)
     print(total)
